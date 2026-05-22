@@ -1,0 +1,53 @@
+# Validate assets
+conda run -n mldb python emulator_bench/prepare_assets.py --auto
+
+# Cache all embeddings once on cuda:1
+CUDA_VISIBLE_DEVICES=1 python emulator_bench/cache_embeddings.py \
+  --base_dir /home/adhil/github/EMULaToR/data/processed/baselines/MPEK \
+  --tasks kcat km \
+  --device cuda:0
+
+# Retrain all kcat and km splits with paper-style defaults on GPU 1
+conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
+  --gpus 1 \
+  --runs_per_gpu 1 \
+  --tasks kcat km \
+  --default_settings
+
+# Retrain across multiple GPUs with multiple concurrent runs per GPU.
+# This example launches 4 concurrent split jobs total: 2 on GPU 0 and 2 on GPU 1.
+conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
+  --gpus 1 \
+  --runs_per_gpu 12 \
+  --tasks kcat km \
+  --default_settings
+
+# Disable tqdm bars when writing cleaner multi-run logs
+conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
+  --gpus 0 1 \
+  --runs_per_gpu 2 \
+  --tasks kcat km \
+  --default_settings \
+  --disable_tqdm
+
+# Sequential alternative
+CUDA_VISIBLE_DEVICES=1 conda run -n mldb python emulator_bench/run_split_benchmarks.py \
+  --tasks kcat km \
+  --device cuda:0 \
+  --cache_device cuda:0
+
+# Optional Optuna
+CUDA_VISIBLE_DEVICES=1 conda run -n mldb python emulator_bench/launch_parallel_optuna.py \
+  --gpus 1 \
+  --tasks kcat km \
+  --n_trials 20
+
+# Aggregate finished runs
+conda run -n mldb python emulator_bench/aggregate_mpek_results.py --tasks kcat km
+
+# Tiny smoke cache example
+CUDA_VISIBLE_DEVICES=1 conda run -n mldb python emulator_bench/cache_embeddings.py \
+  --tasks kcat km \
+  --split_groups random_splits_grouped_sequence \
+  --limit_rows 2 \
+  --device cuda:0
