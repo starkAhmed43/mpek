@@ -14,6 +14,14 @@ conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
   --tasks kcat km \
   --default_settings
 
+# Seeds default to 666 777 888. Override them like this:
+conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
+  --gpus 1 \
+  --runs_per_gpu 1 \
+  --tasks kcat km \
+  --seeds 111 222 333 \
+  --default_settings
+
 # Retrain across multiple GPUs with multiple concurrent runs per GPU.
 # This example launches 4 concurrent split jobs total: 2 on GPU 0 and 2 on GPU 1.
 conda run -n mldb python emulator_bench/launch_parallel_retrain.py \

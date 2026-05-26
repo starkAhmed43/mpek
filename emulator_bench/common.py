@@ -19,6 +19,7 @@ DEFAULT_BASE_DIR = Path("/home/adhil/github/EMULaToR/data/processed/baselines/MP
 DEFAULT_EMBEDDINGS_DIR = DEFAULT_BASE_DIR / "embeddings"
 DEFAULT_RESULTS_DIRNAME = "mpek_results"
 DEFAULT_TASKS = ["kcat", "km"]
+DEFAULT_SEEDS = [666, 777, 888]
 DEFAULT_SPLIT_GROUPS = [
     "random_splits_grouped_sequence",
     "random_splits_grouped_smiles",

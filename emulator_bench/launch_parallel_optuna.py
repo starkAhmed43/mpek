@@ -11,7 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from emulator_bench.common import DEFAULT_SPLIT_GROUPS
+from emulator_bench.common import DEFAULT_SPLIT_GROUPS, DEFAULT_SEEDS
 from emulator_bench.run_split_benchmarks import maybe_cache
 from emulator_bench.tune_optuna import metric_direction, prepare_storage
 
@@ -87,7 +87,7 @@ def main():
     parser.add_argument("--tasks", nargs="+", default=["kcat", "km"])
     parser.add_argument("--split_groups", nargs="+", default=DEFAULT_SPLIT_GROUPS)
     parser.add_argument("--thresholds", nargs="+", default=None)
-    parser.add_argument("--seeds", nargs="+", type=int, default=[666])
+    parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--sequence_col", type=str, default="sequence")
     parser.add_argument("--smiles_col", type=str, default="smiles")
     parser.add_argument("--target_col", type=str, default="log10_value")

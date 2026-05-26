@@ -15,6 +15,7 @@ from emulator_bench.common import (
     DEFAULT_RESULTS_DIRNAME,
     DEFAULT_SPLIT_GROUPS,
     DEFAULT_TASKS,
+    DEFAULT_SEEDS,
     discover_split_jobs,
     normalize_threshold_args,
     split_sizes,
@@ -134,7 +135,7 @@ def main():
     parser.add_argument("--split_groups", nargs="+", default=DEFAULT_SPLIT_GROUPS)
     parser.add_argument("--threshold", type=str, default=None)
     parser.add_argument("--thresholds", nargs="+", default=None)
-    parser.add_argument("--seeds", nargs="+", type=int, default=[666])
+    parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--device", type=str, default="cuda:0")
     parser.add_argument("--cache_device", type=str, default="cuda:0")
     parser.add_argument("--skip_cache", action="store_true")

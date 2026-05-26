@@ -98,6 +98,13 @@ conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
   --gpus 0 1 --runs_per_gpu 2 --tasks kcat km --default_settings
 ```
 
+The default seeds are `666 777 888`. Override them with `--seeds`, for example:
+
+```bash
+conda run -n mldb python emulator_bench/launch_parallel_retrain.py \
+  --gpus 0 1 --runs_per_gpu 2 --tasks kcat km --seeds 111 222 333
+```
+
 Training shows tqdm bars with live batch loss and epoch RMSE by default. With many concurrent runs, terminal output can interleave; add `--disable_tqdm` for cleaner log files.
 
 Optional Optuna:
